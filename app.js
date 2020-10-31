@@ -41,15 +41,9 @@ app.use(express.static(__dirname + '/public'))
    .use(cookieParser())
    .use(express.json());
 
-
-
-
-
-
 app.get('/testAPI', function(req, res){
   res.send("API proxy worked!")
 })
-
 
 app.get('/login', function(req, res) {
 
@@ -145,6 +139,14 @@ app.post('/api/getUserInfo', function(req, res){
   });
 });
 
+app.post('/api/shuffle', function(req, res){
+  const access_token = req.body.access_token
+  const playlist_id = req.body.playlist_id
+  
+
+
+})
+
 app.post('/api/getUserPlaylists', function(req, res){
   console.log(req.body.access_token)
   var access_token = req.body.access_token
@@ -160,10 +162,6 @@ app.post('/api/getUserPlaylists', function(req, res){
     res.send(body)
   });
 });
-
-
-
-
 
 app.get('/refresh_token', function(req, res) {
 

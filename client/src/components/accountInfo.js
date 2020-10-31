@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {IonButton, IonList, IonCard, IonGrid, IonCol, IonRow} from '@ionic/react'
+import {IonButton, IonList, IonCard, IonGrid, IonCol, IonRow, IonContent} from '@ionic/react'
 import axios from 'axios'
 import PlaylistItem from './PlaylistItem'
 
@@ -54,21 +54,27 @@ function App(props) {
   return (
     <div className="App">
       <h2>Welcome, {username}!</h2>
+      <h3>Click Which Playlist You Would Like to Shuffle!</h3>
+      <IonContent style={{height:"85vh"}}>
       <IonGrid>
           <IonRow>
       <IonCol></IonCol>
       <IonCol>
         <IonCard>
+        
             <IonList>
-                        {playlists.map((playlist) => (
+                    {playlists.map((playlist) => (
                         <PlaylistItem playlist={playlist} />
-                        ))}
+                     ))}
             </IonList>
+
         </IonCard>
+
         </IonCol>
         <IonCol></IonCol>
         </IonRow>
        </IonGrid>
+       </IonContent>
     </div>
   );
 }

@@ -45,11 +45,11 @@ import {
   function PlaylistItem(props) {
     console.log(props)
     return(
-      <IonItem>
+      <IonItem button onClick={()=> console.log(props.playlist.name)}>
           {props.playlist.images ? (
           <IonThumbnail slot="start">
             {props.playlist.images[0] ? (
-              <img src={props.playlist.images[0].url}></img>
+              <img src={props.playlist.images[0].url} alt="icon"></img>
             ) : (
               <img src="https://i.kym-cdn.com/entries/icons/mobile/000/013/564/doge.jpg"></img>
             )}
