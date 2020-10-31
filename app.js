@@ -145,7 +145,21 @@ app.post('/api/getUserInfo', function(req, res){
   });
 });
 
+app.post('/api/getUserPlaylists', function(req, res){
+  console.log(req.body.access_token)
+  var access_token = req.body.access_token
 
+  var options = {
+    url: 'https://api.spotify.com/v1/me/playlists',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
+  };
+
+      // use the access token to access the Spotify Web API
+  request.get(options, function(error, response, body) {
+    res.send(body)
+  });
+});
 
 
 
