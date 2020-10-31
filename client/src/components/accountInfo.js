@@ -15,15 +15,12 @@ const login_url = "http://localhost:8888/login";
 
 function App(props) {
 
-
-
   const access_token = new URLSearchParams(props.location.search).get(
     "access_token"
   );
 
-
-
   const [username, setUsername] = useState("");
+  const [id, setID] = useState("");
   const [playlists, setPlaylists] = useState([]);
   const [offset, setOffset] = useState(0)
 
@@ -54,6 +51,7 @@ function App(props) {
       })
       .then((res) => {
         console.log(res);
+        setID(res.data.id)
         setUsername(res.data.display_name);
       })
       .catch((error) => {
@@ -91,7 +89,7 @@ function App(props) {
               <IonCard>
                 <IonList>
                   {playlists.map((playlist) => (
-                    <PlaylistItem playlist={playlist} />
+                    <PlaylistItem playlist={playlist} access_token={access_token} user_id={id} />
                   ))}
                 </IonList>
               </IonCard>

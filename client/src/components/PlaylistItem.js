@@ -43,13 +43,35 @@ import {
     IonCol,
   } from "@ionic/react";
   import "@ionic/core/css/ionic.bundle.css";
+  import axios from 'axios'
 
 
   function PlaylistItem(props) {
 
     const [showModal, setShowModal] = useState(false)
 
+    const access_token = props.access_token
+  
+    const playlist_name = props.playlist.name
 
+    const data = {access_token: access_token, playlist_id: props.playlist.id, user_id: props.user_id, playlist_name: playlist_name}
+
+    function shufflePlaylist(){
+      axios
+      .post("http://localhost:8888/api/shuffle", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res.data.items);
+        //setPlaylists(res.data.items);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    
+    }
 
     console.log(props)
     return(
@@ -70,7 +92,7 @@ import {
         <IonRow>
           <IonCol/>
           <IonCol>
-        <IonButton color="success" onClick={() => setShowModal(false)}>Shuffle Playlist</IonButton>
+        <IonButton color="success" onClick={() => shufflePlaylist()}>Shuffle Playlist</IonButton>
         </IonCol>
         <IonCol/>
         </IonRow>

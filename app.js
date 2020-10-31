@@ -142,10 +142,77 @@ app.post('/api/getUserInfo', function(req, res){
 app.post('/api/shuffle', function(req, res){
   const access_token = req.body.access_token
   const playlist_id = req.body.playlist_id
-  
+  const playlist_name = req.body.playlist_name
+  const user_id = req.body.user_id
+  const playlist_description = "Playlist Shuffled by Spotify Shuffler"
+  console.log(access_token)
+  console.log(playlist_id)
+  console.log(user_id)
+  console.log(playlist_name)
+
+  //Create New Playlist
+
+  var headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + access_token,
+  };
+
+  var dataString =
+    '{"name":"' +
+    playlist_name +
+    ' 🔀","description":"' +
+    playlist_description +
+    '","public":true}';
+
+  var options = {
+    url:
+      "https://api.spotify.com/v1/users/" +
+      user_id +
+      "/playlists",
+    method: "POST",
+    headers: headers,
+    body: dataString,
+  };
+
+  async function callback(error, response, body) {
+    if (!error && response.statusCode == 201) {
+      var plist_data = JSON.parse(body);
+    } else {
+      console.log(error)
+    }
+  }
+
+  request(options, callback);
+
+});
 
 
-})
+
+
+  // var dataString = '{"name":"'+ playlist_name + ' 🔀","description":"Shuffled by Spotify Shuffler","public":true}';
+
+  // var options = {
+  //   url: 'https://api.spotify.com/v1/users/'+user_id+'/playlists',
+  //   headers: { 'Authorization': 'Bearer ' + access_token },
+  //   body:dataString,
+  //   json: true
+  // };
+
+  //     // use the access token to access the Spotify Web API
+  // request.post(options, function(error, response, body) {
+  //   if(error)
+  //     console.log(error)
+  //   res.send(body)
+
+  // });
+
+  //Copy Playlist Items
+
+  //Shuffle Playlist Items
+
+  //Return Success
+
 
 app.post('/api/getUserPlaylists', function(req, res){
   console.log(req.body.access_token)
