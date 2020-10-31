@@ -158,60 +158,73 @@ app.post('/api/shuffle', function(req, res){
     Authorization: "Bearer " + access_token,
   };
 
-  var dataString =
-    '{"name":"' +
-    playlist_name +
-    ' 🔀","description":"' +
-    playlist_description +
-    '","public":true}';
-
-  var options = {
-    url:
-      "https://api.spotify.com/v1/users/" +
-      user_id +
-      "/playlists",
-    method: "POST",
-    headers: headers,
-    body: dataString,
-  };
-
-  async function callback(error, response, body) {
-    if (!error && response.statusCode == 201) {
-      var plist_data = JSON.parse(body);
-    } else {
-      console.log(error)
-    }
-  }
-
-  request(options, callback);
-
-});
-
-
-
-
-  // var dataString = '{"name":"'+ playlist_name + ' 🔀","description":"Shuffled by Spotify Shuffler","public":true}';
+  // var dataString =
+  //   '{"name":"' +
+  //   playlist_name +
+  //   ' 🔀","description":"' +
+  //   playlist_description +
+  //   '","public":true}';
 
   // var options = {
-  //   url: 'https://api.spotify.com/v1/users/'+user_id+'/playlists',
-  //   headers: { 'Authorization': 'Bearer ' + access_token },
-  //   body:dataString,
-  //   json: true
+  //   url:
+  //     "https://api.spotify.com/v1/users/" +
+  //     user_id +
+  //     "/playlists",
+  //   method: "POST",
+  //   headers: headers,
+  //   body: dataString,
   // };
 
-  //     // use the access token to access the Spotify Web API
-  // request.post(options, function(error, response, body) {
-  //   if(error)
-  //     console.log(error)
-  //   res.send(body)
+  // async function callback(error, response, body) {
+  //   if (!error && response.statusCode == 201) {
+  //     var plist_data = JSON.parse(body);
+  //     console.log(plist_data)
 
-  // });
+  //     //Get Original Playlist Tracks
+  //     //Copy Playlist Items
+
+  //   } else {
+  //     console.log(error)
+  //   }
+  // }
+
+  // request(options, callback);
 
   //Copy Playlist Items
+
+  var options2 = {
+    url:
+  "https://api.spotify.com/v1/playlists/" +
+  playlist_id +
+  "/tracks?market=US&fields=items(track(uri))&limit=100&offset=0",
+    headers: headers,
+    json: true
+  }
+
+  async function callback2(error, response, body){
+    if (!error && response.statusCode == 201) {
+      console.log("RESPONSE BELOW")
+      console.log(response)
+      var song_data = JSON.parse(body);
+      console.log(song_data)
+  }
+  else{
+    console.log("RESPONSE BELOW")
+    console.log(error)
+  }
+
+}
+
+  request.get(options2, callback2);
+
+
 
   //Shuffle Playlist Items
 
   //Return Success
+
+
+});
 
 
 app.post('/api/getUserPlaylists', function(req, res){
