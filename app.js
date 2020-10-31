@@ -44,7 +44,9 @@ app.use(express.static(__dirname + '/public'))
 
 
 
-
+app.get('/testAPI', function(req, res){
+  res.send("API proxy worked!")
+})
 
 
 app.get('/login', function(req, res) {
