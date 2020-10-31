@@ -1,30 +1,19 @@
-import React, {useState, useEffect} from 'react'
-import {
-  IonButton
-} from "@ionic/react";
+import React from 'react'
+import {BrowserRouter, Route} from "react-router-dom"
+import {IonApp, IonMenu} from '@ionic/react'
 import "@ionic/core/css/ionic.bundle.css";
 import logo from './logo.svg';
 import './App.css';
-
-const login_url = "http://localhost:8888/login";
-
+import testAPI from './components/testAPI'
+import accountInfo from './components/accountInfo'
 function App() {
-
-  const [response, setResponse] = useState("no response")
-
-  useEffect(()=>{
-    fetch('/testAPI')
-      .then(res => res.text())
-      .then(res => setResponse(res))
-
-  });
-
   return (
-    <div className="App">
-      <h1>{response}</h1>
-        <IonButton href={login_url}>Hello</IonButton>
-    </div>
+    <BrowserRouter>
+      <IonApp>
+        <Route exact path="/" component={testAPI} />
+        <Route path="/accountinfo" component={accountInfo} />
+      </IonApp>
+    </BrowserRouter>
   );
 }
-
 export default App;

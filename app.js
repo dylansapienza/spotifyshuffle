@@ -38,7 +38,9 @@ var app = express();
 
 app.use(express.static(__dirname + '/public'))
    .use(cors())
-   .use(cookieParser());
+   .use(cookieParser())
+   .use(express.json());
+
 
 
 
@@ -102,7 +104,7 @@ app.get('/callback', function(req, res) {
             refresh_token = body.refresh_token;
 
         var options = {
-          url: 'https://api.spotify.com/v1/me/playlists',
+          url: 'https://api.spotify.com/v1/me/',
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
         };
@@ -113,10 +115,9 @@ app.get('/callback', function(req, res) {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('/#' +
+        res.redirect(301,'http://localhost:3000/accountinfo?' +
           querystring.stringify({
-            access_token: access_token,
-            refresh_token: refresh_token
+            access_token: access_token
           }));
       } else {
         res.redirect('/#' +
@@ -128,7 +129,21 @@ app.get('/callback', function(req, res) {
   }
 });
 
+app.post('/api/getUserInfo', function(req, res){
+  console.log(req.body.access_token)
+  var access_token = req.body.access_token
 
+  var options = {
+    url: 'https://api.spotify.com/v1/me/',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
+  };
+
+      // use the access token to access the Spotify Web API
+  request.get(options, function(error, response, body) {
+    res.send(body)
+  });
+});
 
 
 
