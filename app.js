@@ -51,7 +51,7 @@ app.get('/login', function(req, res) {
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  var scope = 'user-read-private user-read-email playlist-modify-private';
+  var scope = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative  playlist-modify-private playlist-modify-public';
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
@@ -150,9 +150,9 @@ app.post('/api/shuffle', function(req, res){
 app.post('/api/getUserPlaylists', function(req, res){
   console.log(req.body.access_token)
   var access_token = req.body.access_token
-
+  var offset = req.body.offset
   var options = {
-    url: 'https://api.spotify.com/v1/me/playlists',
+    url: 'https://api.spotify.com/v1/me/playlists?limit=50&offset='+ offset,
     headers: { 'Authorization': 'Bearer ' + access_token },
     json: true
   };
